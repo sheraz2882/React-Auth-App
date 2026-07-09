@@ -1,0 +1,31 @@
+.login-page-section{
+  display: flex;
+  flex-direction: row;
+
+}
+
+.login-page-section > div{
+  display: flex;
+  flex-direction: column;
+}
+
+.login-detail-section,
+.login-cover {
+  flex: 1;
+}
+
+.login-cover  img{
+  width: 80%;
+  margin: 20px;
+}
+
+.login-detail-section{
+  align-items: start;
+  justify-content: center;
+  margin: 20px;
+
+}
+
+.login-cover{
+  align-items: end;
+}
