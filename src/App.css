@@ -1,13 +1,16 @@
 .login-page-section{
+ 
   display: flex;
   flex-direction: row;
 
 }
 
 .login-page-section > div{
+  
   display: flex;
   flex-direction: column;
 }
+
 
 .login-detail-section,
 .login-cover {
@@ -20,7 +23,7 @@
 }
 
 .login-detail-section{
-  align-items: start;
+  align-items: center;
   justify-content: center;
   margin: 20px;
 
@@ -28,4 +31,37 @@
 
 .login-cover{
   align-items: end;
+}
+
+.login-form-section{
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  width: 50%;
+}
+
+.submit-form{
+  display: flex;
+  flex-direction: column;
+  align-items: end;
+  margin-top: 15px;
+  width: 50%;
+}
+
+.button-css{
+  width: 100%;
+  padding : 8px;
+  border-radius: 8px;
+  background-color: #162D3A;
+  color : #fff;
+  margin-top: 8px;
+}
+
+.login-form-section >  input{
+  width: 100%;
+  padding: 8px;
+  border-radius: 8px;
+  border: 1px solid #cfe8f7;
+  background-color: #f0f9ff;
+  box-sizing: border-box;
 }
