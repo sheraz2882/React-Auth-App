@@ -1,0 +1,13 @@
+.form-inputs > select {
+  width: 100%;
+  padding: 8px;
+  border-radius: 8px;
+  border: 1px solid #cfe8f7;
+  background-color: #f0f9ff;
+  box-sizing: border-box;
+}
+
+.submit-form {
+  width: 100%;
+  align-items: stretch;
+}
