@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import LoginCoverImage from "./assets/login_page_img.jpg";
 import ORImage from "./assets/Or.png";
 import GOOGLEICON from "./assets/google_icon.png";
@@ -44,6 +44,7 @@ export const LoginComponent = () => {
 };
 
 function LoginForm() {
+  const navigate = useNavigate();
   const [data, setData] = useState({
     email: "",
     password: "",
@@ -52,6 +53,9 @@ function LoginForm() {
     email: "",
     password: "",
   });
+
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -87,16 +91,52 @@ function LoginForm() {
     return validationErrors;
   };
 
-  const handleSubmit = (e) => {
+  async function handleSubmit(e) {
     e.preventDefault();
+    setError("");
+    setLoading(true);
 
     const validationErrors = validate();
     setErrors(validationErrors);
 
     if (!validationErrors.email && !validationErrors.password) {
-      alert("Login successful!");
+      try {
+        const loginFetchResponse = await fetch(
+          "http://localhost:5000/api/auth/login",
+          {
+            method: "post",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              email: data.email,
+              password: data.password,
+            }),
+          },
+        );
+
+        const responseData = await loginFetchResponse.json();
+
+        // const text = loginFetchResponse.text(); // read as text first, not .json()
+        // console.log("Status:", loginFetchResponse.status);
+        // console.log("Raw response:", text);
+
+        if (!loginFetchResponse.ok) {
+          throw new Error(responseData.message || "Login Failed");
+        }
+
+        localStorage.setItem("loginToken", responseData.token);
+
+        //navigation to home page
+        navigate("/home");
+      } catch (err) {
+        const message = err instanceof Error ? err.message : String(err);
+        setError(message);
+      } finally {
+        setLoading(false);
+      }
     }
-  };
+  }
 
   return (
     <div
@@ -145,8 +185,12 @@ function LoginForm() {
           </p>
 
           <button className="button-css" type="submit">
-            Sign in
+            {loading ? "Signing in..." : "Sign in"}
           </button>
+
+          {error && (
+            <p style={{ color: "crimson", marginBottom: 12 }}>{error}</p>
+          )}
         </div>
       </form>
 
