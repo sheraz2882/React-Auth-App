@@ -1,15 +1,40 @@
 import React, { useState } from "react";
 import ProfileIcon from "./assets/profile_icon.png";
+import { useNavigate } from "react-router-dom";
 
 export const HomeHeader = () => {
   const [menuOpen, setMenuOpen] = useState(false);
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
   const toggleMenu = () => {
     setMenuOpen((prev) => !prev);
   };
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
     // add logout logic here
+
+    try {
+      setLoading(true);
+      setError("");
+
+      const response = await fetch("http://localhost:5000/api/auth/logout");
+
+      const logoutResponseData = await response.json();
+
+      if (!response.ok) {
+        throw new Error(logoutResponseData.message || "");
+      }
+
+      navigate("/");
+    } catch (err) {
+      const message = err instanceof Error ? err.message : String(err);
+      console.log(message);
+    } finally {
+      setLoading(false);
+    }
+
     setMenuOpen(false);
   };
 

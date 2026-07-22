@@ -4,6 +4,7 @@ import LoginCoverImage from "./assets/login_page_img.jpg";
 import ORImage from "./assets/Or.png";
 import GOOGLEICON from "./assets/google_icon.png";
 import "./css/App.css";
+import "./css/spinner.css";
 
 export const LoginComponent = () => {
   return (
@@ -184,8 +185,14 @@ function LoginForm() {
             Forgot Password?
           </p>
 
-          <button className="button-css" type="submit">
-            {loading ? "Signing in..." : "Sign in"}
+            {loading ? (
+              <>
+                <span className="spinner" aria-hidden="true"></span>
+                <span className="sr-only">Signing in...</span>
+              </>
+            ) : (
+              "Sign in"
+            )}
           </button>
 
           {error && (
